@@ -36,14 +36,23 @@ const handleRequest = function(req, res) {
     res.end();
   }
 
-  // TODO: GET ONE
-  if ((req.url == '/quote/' || req.url == '/quote') && req.method == "FILL ME IN") {
-    //YOUR CODE HERE
-
+ // TODO: GET ONE
+  if ((req.url == '/quote/' || req.url == '/quote') && req.method == "GET") {
+    res.writeHead(200, headers);
+    res.write(quotes[getRandomInt(0, quotes.length)]);
+    res.end();
   }
   // TODO: POST/CREATE
-  else if ((req.url == 'FILL ME IN' || req.url == 'FILL ME IN') && req.method == "FILL ME IN") {
-    //YOUR CODE HERE
+  else if ((req.url == '/quote/' || req.url == '/quote') && req.method == "POST") {
+    let body = '';
+    req.on('data', function (chunk) {
+      body += chunk;
+      quotes.push(body);
+    });
+    req.on('end', function () {
+      res.writeHead(200, headers);
+      res.end(body);
+    });
   }
 
 //CATCH ALL ROUTE
